@@ -1,0 +1,27 @@
+/*.navbar-inverse .nav-collapse .nav > li > a:hover,*/
+/*.navbar-inverse .nav-collapse .nav > li > a:focus,*/
+.navbar-inverse .nav-collapse .dropdown-menu a:hover,
+.navbar-inverse .nav-collapse .dropdown-menu a:focus {
+  /*background-color: #00C697;*/
+  background-color: transparent;
+  text-decoration: underline;
+}
+.navbar-inverse .nav li.dropdown > a.dropdown-toggle:hover,
+.navbar-inverse .nav li.dropdown > a.dropdown-toggle:focus {
+  background-color: #00C697;
+  color: #ffffff;
+}
+/*.navbar-inverse .nav-collapse .nav > li > a:hover,*/
+/*.navbar-inverse .nav-collapse .nav > li > a:focus,*/
+.navbar-inverse .nav li.dropdown.open > .dropdown-toggle,
+.navbar-inverse .nav li.dropdown.active > .dropdown-toggle,
+.navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle {
+  background-color: #00C697;
+  text-decoration: none;
+}
+
+
+.navbar-inverse .nav-collapse .nav > li > a,
+.navbar-inverse .nav-collapse .dropdown-menu a {
+  color: #fff;
+}

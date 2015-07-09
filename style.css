@@ -1,0 +1,426 @@
+/** 
+	Theme Name: Monades Aristeias
+	Theme URI: http://ma.ellak.gr
+	Description: Monades Aristeias Theme
+	Version: 0.1
+	Author: Monades Aristeias
+	Author URI: http://ma.ellak.gr
+  Licence: CreativeCommonts
+  
+  Description: A base theme for development on Monades Aristeias - ELLAK. Based on https://code.google.com/p/wordpress-naked/.
+*/
+
+html {
+  overflow-y: scroll;
+}
+
+body { }
+
+#canvas {
+  width: 768px;
+  margin: 0 auto;
+}
+
+#header {
+  margin: 0 0 10px 0;
+}
+  /** the heading and tagline are h1 on homepage and h4 on internal */
+  #header h1,
+  #header h4 {
+    font-size: 30px;
+    margin: 0;
+    padding: 10px 0 10px 0;
+  }
+    /** the tagline is a span within the h1 or h4 */
+    #header h1 span,
+    #header h4 span { }
+
+  /**
+    Nav and Subnav
+    Split these out if you want the two levels to look different
+  */
+  #nav,
+  #subNav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  #subNav {
+    margin-top: 10px;
+  }
+    #nav li,
+    #subNav li {
+      display: inline;
+      padding: 0 10px 0 0;
+    }
+    /* Currently selected page nav item (and parent) if applicable */
+    .current_page_item a,
+    .current_page_parent a {
+      text-decoration: none;
+    }
+      .current_page_item a:hover,
+      .current_page_parent a:hover {
+        text-decoration: underline;
+      }
+
+/**      main content     */
+#primaryContent {
+  width: 540px;
+  float: left;
+  padding: 0 20px 0 0;
+  margin: 0;
+}
+  #primaryContent h1 {
+    padding: 0;
+    margin: 10px 0 0 0;
+  }
+
+  #primaryContent h2 {
+    padding: 0;
+    margin: 10px 0 0 0;
+  }
+
+  /* titles are h2 on homepage and h1 for internal */
+  #primaryContent h1.postTitle,
+  #primaryContent h2.postTitle {
+    font-size: 22px;
+  }
+
+  #primaryContent h3 {
+    padding: 0;
+    margin: 10px 0 0 0;
+  }
+
+  ol#posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+    li.postWrapper,
+    div.postWrapper { }
+
+      .postWrapper img { }
+
+      div.post { }
+
+      p.postMeta { }
+
+  #pagination {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+  }
+    #pagination li {
+      display: inlne;
+    }
+    #pagination .previous {
+      text-align: left;
+      float: left;
+    }
+    #pagination .future {
+      text-align: right;
+      float: right;
+    }
+
+/**       sidebar          */
+#secondaryContent {
+  width: 200px;
+  float: left;
+}
+  #secondaryContent h3 {
+    padding: 0;
+    margin: 10px 0 0 0;
+  }
+
+  /**
+    Remove bullets from the first level sidebar UL and give each item some bottom margin.
+    IE 6 doesn't like the selectors, I can live with that but if you can't then
+    you'll need to extend this further.
+  */
+  #secondaryContent > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+    #secondaryContent > ul > li {
+      margin: 0 0 10px 0;
+    }
+
+  /** the HTML is a bit dodgy for the tag cloud, need to add some padding
+      between the title and the first href */
+  .widget_tag_cloud a {
+    padding-left: 5px;
+  }
+
+#comment {
+  width: 500px;
+}
+
+#footer {
+  clear: both;
+  font-size: 80%;
+}
+
+/** normally hidden but will appear when css disabled */
+.skip,
+.noCss {
+  position: absolute;
+  left: -9999px;
+}
+
+/**
+  theme requirements as per 
+  http://codex.wordpress.org/CSS
+*/
+.alignnone {
+    margin: 5px 20px 20px 0;
+}
+
+.aligncenter,
+div.aligncenter {
+    display: block;
+    margin: 5px auto 5px auto;
+}
+
+.alignright {
+    float:right;
+    margin: 5px 0 20px 20px;
+}
+
+.alignleft {
+    float: left;
+    margin: 5px 20px 20px 0;
+}
+
+.aligncenter {
+    display: block;
+    margin: 5px auto 5px auto;
+}
+
+a img.alignright {
+    float: right;
+    margin: 5px 0 20px 20px;
+}
+
+a img.alignnone {
+    margin: 5px 20px 20px 0;
+}
+
+a img.alignleft {
+    float: left;
+    margin: 5px 20px 20px 0;
+}
+
+a img.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.wp-caption {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    max-width: 96%; /* Image does not overflow the content area */
+    padding: 5px 3px 10px;
+    text-align: center;
+}
+
+.wp-caption.alignnone {
+    margin: 5px 20px 20px 0;
+}
+
+.wp-caption.alignleft {
+    margin: 5px 20px 20px 0;
+}
+
+.wp-caption.alignright {
+    margin: 5px 0 20px 20px;
+}
+
+.wp-caption img {
+    border: 0 none;
+    height: auto;
+    margin: 0;
+    max-width: 98.5%;
+    padding: 0;
+    width: auto;
+}
+
+.wp-caption p.wp-caption-text {
+    font-size: 11px;
+    line-height: 17px;
+    margin: 0;
+    padding: 0 4px 5px;
+}
+
+/** Thematikes_overview */
+
+.col1intro {
+	
+	background-color:#F5F5F5;
+	  float:left !important;
+	  margin-right:7px;
+	  padding:9px;
+	 width:346px;
+	 border:1px solid #57294C;
+	 margin-bottom:40px;
+	
+}
+
+.col1intro h3 {
+	
+	font-size:15px;
+	  font-weight:bolder;
+	  padding:3px;
+	  background-color:#FAED4B;
+	
+}
+
+.col1intro li {
+	
+	text-align:left;
+	list-style:square;
+	
+}
+
+.col1intro li a {
+	
+	color:#57294C;
+	font-weight:normal;
+	
+	
+}
+
+.col1intro h2 {
+	font-size:14px;
+	  font-style:normal;
+	  font-weight:bold;
+	  line-height:25px;
+	  padding:9px;
+	  background-color:#FAED4B;
+}
+.col1{
+	
+	background-color:#F5F5F5;
+	  float:left !important;
+	  margin-right:7px;
+	  padding:9px;
+	 width:199px;
+	 border:1px solid #57294C;
+}
+.col1 h3 {
+	font-size:12px;
+	  font-weight:bolder;
+	  padding:9px;
+	  background-color:#FAED4B;
+}
+
+
+.colfirst{
+  
+  background-color:#F5F5F5;
+    float:left !important;
+    margin-right:7px;
+    padding:9px;
+   width:97%;
+   border:1px solid #57294C;
+   margin-bottom:10px;
+}
+.colfirst h3 {
+ background-color:#57294C;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  padding:4px;
+}
+
+.colfirst li {
+border-bottom-color:#57294C;
+  border-bottom-style:dotted;
+  border-bottom-width:1px;
+  list-style-type:square;
+  margin-bottom:15px;
+  margin-top:20px;
+
+}
+
+.colfirst li a 
+{
+
+color: #57294C;
+
+}
+
+.col1 h2 {
+	font-size:14px;
+	  font-style:normal;
+	  font-weight:bold;
+	  line-height:25px;
+	  padding:9px;
+	  background-color:#FAED4B;
+}
+
+
+
+
+
+.colf1{
+	
+	background-color:#F5F5F5;
+	  float:left !important;
+	  margin-right:9px;
+	  padding:9px;
+	  width:235px;
+	  border:1px solid #57294C;
+}
+.colf1 h3 {
+	font-size:15px;
+	  font-weight:bolder;
+	  padding:9px;
+	  background-color:#FAED4B;
+}
+.colf1 h2 {
+    background-color:#FAED4B;
+     font-size:14px;
+     font-style:normal;
+     font-weight:bold;
+     line-height:22px;
+     padding:9px;
+	 
+}
+
+.listcol1
+{
+	
+	height:260px;
+	overflow:auto;
+	
+}
+.listcol1 li a
+
+{
+	
+	
+	
+	font-weight:normal;
+	
+}
+
+.listcol1 li
+
+
+{
+	list-style:square;
+	
+	
+}
+
+
+#unitright 
+
+{
+
+
+  
+}
