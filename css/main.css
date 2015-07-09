@@ -1079,9 +1079,9 @@ input[type="color"],
 .count,
 .featurette.stats span {
   color: #57294C;
-  width: 1.5em;
-  height: 1.5em;
-  padding: .75em;
+  width: 40px;
+  height: 40px;
+  padding: 10px 5px;
   border-radius: 2em;
   font-size: 16px !important;
   font-weight: 300 !important;
