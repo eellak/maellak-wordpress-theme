@@ -10,14 +10,14 @@
   if (have_posts()) : while (have_posts()) : the_post();
     echo social_output();
     ?>
-      
+
   <div class="row-fluid">
   	<div class="span8">
   	<p  class="meta purple">
   	 <small><?php the_date(); ?>  <?php echo __('ΑΠΟ','ma-ellak')."&nbsp;"; the_author(); ?></small>
-      <?php //echo get_avatar( $comment, 32 ); ?>  
+      <?php //echo get_avatar( $comment, 32 ); ?>
   	</p>
-      
+
       <p><?php the_content(__('(more...)')); ?></p>
 	</div><!-- span8 end -->
   	<div class="span4 sidebar">
@@ -28,7 +28,7 @@
  		<p><?php edit_post_link(__('Edit'), ''); ?></p>
  </div>
 
-     
+
 
   <?php
   if(comments_open())
@@ -40,6 +40,6 @@
 
 <?php
   endif;
-    
+
   get_footer();
 ?>
