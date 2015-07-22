@@ -1,8 +1,8 @@
   <?php if (!is_home()){?>
-   
-   
+
+
      </div><!-- home container -->
-    
+
     </div><!-- home main -->
     <?php }?>
   <div class="footer">
@@ -25,13 +25,13 @@
           </div>
         </div>
         <div class="row-fluid bottomline">
-		  <?php 			
-			$menu = wp_nav_menu( array( 'container_id' => '', 'container_class'=>'span12','theme_location' => 'footer-menu','menu_class'=>'inline','fallback_cb'=> 'fallbackfmenu' , 'echo' => false) ); 
-			
-			$extra_links = '<li><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a></li><li class="theYear"><a href="#"><strong>'.date('Y').'</strong></a></li>';
-			
+		  <?php
+			$menu = wp_nav_menu( array( 'container_id' => '', 'container_class'=>'span12','theme_location' => 'footer-menu','menu_class'=>'inline','fallback_cb'=> 'fallbackfmenu' , 'echo' => false) );
+
+			$extra_links = '<li><a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a></li><li class="theYear"><a href="#"><strong>'.date('Y').'</strong></a></li>';
+
 			$menu = str_replace('class="inline">','class="inline">'.$extra_links , $menu);
-			
+
 			echo $menu;
 		  ?>
         </div>
@@ -43,15 +43,7 @@
     	 --><span class="vertical">Υποβολή Σχολίων</span>
     	 </a></div>
    <?php wp_footer()?>
-<!--script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-49671538-8', 'ellak.gr');
-  ga('send', 'pageview');
-</script-->
     <script>
     function opencommentwindow() {
         window.open("https://docs.google.com/forms/d/1wxYYWz42mDxyj-ccp6NbNhUvSnWSi_Tv5qa_8ATUiwA/viewform",
