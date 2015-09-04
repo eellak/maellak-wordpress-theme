@@ -4,14 +4,14 @@ Template Name: Profile - Add
 */
 
 	 if (! is_user_logged_in()) // Μόνο εγγεγραμμένοι χρήστες μπορούν να είναι εδώ.
-		header('Location: '.URL.''); 
-	
+		header('Location: '.URL.'');
+
 	$cur_user = wp_get_current_user();
 	$success = false;
 	$ma_message = '';
 	if(isset($_POST['publish']) &&isset($_POST['post_nonce_field']) && wp_verify_nonce($_POST['post_nonce_field'], 'post_nonce')) {
 		$title = sanitize_text_field($_POST['ctitle']);
-		$description = $_POST['cdescription']; 
+		$description = $_POST['cdescription'];
 		$author =  sanitize_text_field($_POST['user']);
 
 		$tag_list = implode(',', $_POST['tag-select']);
@@ -20,7 +20,7 @@ Template Name: Profile - Add
 		}
 		// Ορίζουμε τις κατηγορίες/ταξονομίες
 		$tax = array(
-			'post_tag' => $tag_list, 
+			'post_tag' => $tag_list,
 			'package' => implode(',', $_POST['package-select']),
 			'jobtype' => implode(',', $_POST['jobtype-select']),
 			'type' => implode(',', $_POST['type-select']),
@@ -28,12 +28,12 @@ Template Name: Profile - Add
 		$profile = array(
 			'post_title'	=> $title,
 			'post_content'	=> $description,
-			'tax_input'		=> $tax, 		
+			'tax_input'		=> $tax,
 			'post_status'	=> 'draft', 	// publish, preview, future, etc.
-			'post_type'		=> 'profile', 	
-			'post_author'	=> $author 
+			'post_type'		=> 'profile',
+			'post_author'	=> $author
 		);
-		
+
 		// Καταχωρούμε το Λογισμικό
 		$profile_id = wp_insert_post($profile);
 
@@ -41,9 +41,9 @@ Template Name: Profile - Add
 			$unit_id =  ma_ellak_get_unit_id();
 			if( $unit_id != 0)
 				update_post_meta( $profile_id, '_ma_ellak_belongs_to_unit',$unit_id );
-			
+
 			ma_ellak_profile_save_details($profile_id);
-			
+
 			global $ma_prefix ;
 			if ($_FILES) {
 				foreach ($_FILES as $file => $array) {
@@ -51,13 +51,13 @@ Template Name: Profile - Add
 						insert_attachment($file, $profile_id, $ma_prefix . 'profile_logo');
 				}
 			};
-			
+
 			$ma_message = '<p class="message">H καταχώρησή Προφίλ ήταν επιτυχής.</p>';
 			$success = true;
 		} else {
 			$ma_message = '<p class="error">Παρουσιάστηκε πρόβλημα και η καταχώρησή Δεν ήταν επιτυχής.</p>';
 		}
-	} 
+	}
 ?>
 <?php get_header(); ?>
 
@@ -74,7 +74,7 @@ Template Name: Profile - Add
 				<div class="row-fluid">
 					<div class="cols">
 						<div class="span2 characteristic-sidebar software-sidebar">
-							<img src="http://localhost/BestPractices/maellak/wp-content/themes/ma_ellak/images/profile.jpg" alt="profile" width="150" height="150">
+							<img src="<?php echo  get_bloginfo('template_directory'); ?>/images/profile.jpg" alt="profile" width="150" height="150">
 							<br/>
 							<div class="control-group">
 								<label for="logo"><?php _e('Φωτογραφία', 'ma-ellak'); ?></label>
@@ -87,7 +87,7 @@ Template Name: Profile - Add
 								<input type="hidden" name="username" id="username" class="input-block-level input required" value="<?php echo $current_user->user_login;?>"/>
 							</div>
 						</div><!-- span5 characteristic-sidebar software-sidebar -->
-						
+
 						<div class="span5 col side-right">
 							<div class="control-group">
 								<label for="ctitle"><?php _e('Ονοματεπώνυμο (*)', 'ma-ellak'); ?></label>
@@ -117,15 +117,15 @@ Template Name: Profile - Add
 								<label for="phone"><?php _e('Τηλέφωνο επικοινωνίας (*)', 'ma-ellak'); ?></label>
 								<input type="text" name="phone" id="phone" class="input-block-level input required" value="<?php if(isset($_POST['phone'])) echo $_POST['phone'];?>"/>
 							</div>
-							
+
 					   </div><!-- span5 -->
 					</div><!-- cols -->
-										
+
 				</div><!--row-fluid  -->
-					
-					
-					
-					
+
+
+
+
 					<!-- ΣΤΟΙΧΕΙΑ ΚΟΙΝΩΝΙΚΗΣ ΔΙΚΤΥΩΣΗΣ-->
 					<div class="row-fluid back-gray ">
 					 <div style="padding-left:15px;">
@@ -145,7 +145,7 @@ Template Name: Profile - Add
 											<label for="<?php echo $field['id']; ?>"><?php echo $field['name'] ; ?></label>
 											<div class="controls">
 											<input type="text" placeholder="Προσθέσετε το όνομα που χρησιμοποιείτε στο <?php echo $field['name']; ?>" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" class="form-control input-block-level" value="<?php if(isset($_POST[$field['id']])) echo $_POST[$field['id']];?>"  />
-											<span class="help-block">(π.χ. cocacola)</span>
+											<span class="help-block">(π.χ. username)</span>
 											</div>
 										</div>
 									</div>
@@ -156,30 +156,30 @@ Template Name: Profile - Add
 					</div>
 					<!--ΤΕΛΟΣ ΣΤΟΙΧΕΙΩΝ ΚΟΙΝΩΝΙΚΗΣ ΔΙΚΤΥΩΣΗΣ-->
 					<div class="control-group">
-								<label for="tags"><?php _e('Λέξεις Κλειδιά (Skills)', 'ma-ellak'); ?></label>
-								<?php 
-									$tagz = get_taxonomy('post_tag'); 
-									echo ma_ellak_add_term_chosebox( $tagz, 'tag-select', false );
-								?>
-								<a href="#" id="addnewtags" style="font-size:90%; font-style:italics;"><?php _e('Προσθέστε δικές σας Ετικέτες (skills) αν δεν εντοπίστηκαν παραπάνω.', 'ma-ellak'); ?></a>
-								<input type="text" name="selftags" style="" id="selftags" class="form-control input-block-level" value="<?php if(isset($_POST['selftags'])) echo $_POST['selftags'];?>" placeholder="<?php _e('Χωρίστε με κόμμα (,) τις νέες ετικέτες', 'ma-ellak'); ?>" />
+							<label for="tags"><?php _e('Λέξεις Κλειδιά (Skills)', 'ma-ellak'); ?></label>
+							<?php
+								$tagz = get_taxonomy('post_tag');
+								echo ma_ellak_add_term_chosebox( $tagz, 'tag-select', false );
+							?>
+							<a href="#" id="addnewtags" style="font-size:90%; font-style:italics;"><?php _e('Προσθέστε δικές σας Ετικέτες (skills) αν δεν εντοπίστηκαν παραπάνω.', 'ma-ellak'); ?></a>
+							<input type="text" name="selftags" style="" id="selftags" class="form-control input-block-level" value="<?php if(isset($_POST['selftags'])) echo $_POST['selftags'];?>" placeholder="<?php _e('Χωρίστε με κόμμα (,) τις νέες ετικέτες', 'ma-ellak'); ?>" />
 					</div>
 					<div class="row-fluid" ></div>
-					
+
 					<!--ΑΡΧΗ ΤΩΝ ΓΕΝΙΚΩΝ ΣΤΟΙΧΕΙΩΝ ΤΟΥ ΠΡΟΦΙΛ-->
-				
+
 					<div class="control-group">
 						<label for="cdescription"><?php _e('Σύντομο βιογραφικό', 'ma-ellak'); ?></label>
 						<?php
-							if(isset($_POST['cdescription'])) $content = $_POST['cdescription'];	
+							if(isset($_POST['cdescription'])) $content = $_POST['cdescription'];
 							$settings = array( 'media_buttons' => false, 'textarea_rows'=>10 );
 							wp_editor( $content, 'cdescription', $settings);
 						?>
 					</div>
-					
+
 
 					<!--ΤΕΛΟΣ ΤΩΝ ΓΕΝΙΚΩΝ ΣΤΟΙΧΕΙΩΝ ΤΟΥ ΠΡΟΦΙΛ-->
-					
+
 				<div class="row-fluid">
 					<div>
 						<h3>Παρεχόμενες υπηρεσίες</h3>
@@ -190,34 +190,34 @@ Template Name: Profile - Add
 				<div class="row-fluid">
 					<div class="cols">
 						<div class="span6  col side-right">
-						
+
 							<!-- ΑΡΧΗ ΠΑΡΕΧΟΜΕΝΩΝ ΥΠΗΡΕΣΙΩΝ -->
 								<div class="control-group">
 									<label for="jobtype"><?php _e('Αντικείμενο Παρεχόμενης Υπηρεσίας', 'ma-ellak'); ?></label>
-									<?php 	
-										$type = get_taxonomy('jobtype'); 
+									<?php
+										$type = get_taxonomy('jobtype');
 										echo ma_ellak_add_term_chosebox( $type, 'jobtype-select', true);
 									?>
 								</div>
 								<div class="control-group">
 									<label for="package"><?php _e('Πακέτα Λογισμικού', 'ma-ellak'); ?></label>
-									<?php 
-										$package = get_taxonomy('package'); 
+									<?php
+										$package = get_taxonomy('package');
 										echo ma_ellak_add_term_chosebox( $package, 'package-select', true);
 									?>
 								</div>
 
 								<div class="control-group">
 									<label for="type"><?php _e('Κατηγορία Λογισμικού', 'ma-ellak'); ?></label>
-									<?php 	
+									<?php
 										$type = get_taxonomy('type');
 										echo ma_ellak_add_term_chosebox( $type, 'type-select', true);
 									?>
-								</div>						
+								</div>
 						</div>
 						<div class="span6 characteristic-sidebar software-sidebar">
 							<!--SKILLS-->
-							
+
 							<div class="control-group">
 								<label for="_ma_hourly_rate">Κοστος Ανθρωποωρας</label>
 								<div class="controls">
@@ -239,11 +239,11 @@ Template Name: Profile - Add
 					</div><!-- cols -->
 				</div><!-- row-fluid -->
 				<div class="row-fluid"></div>
-				
+
 					<div class="control-group">
 						<label for="cdescription"><?php _e('Περιγραφή παρεχόμενης υπηρεσίας', 'ma-ellak'); ?></label>
 						<?php
-							if(isset($_POST['_ma_service_desc'])) $content = $_POST['_ma_service_desc'];	
+							if(isset($_POST['_ma_service_desc'])) $content = $_POST['_ma_service_desc'];
 							$settings = array( 'media_buttons' => false, 'textarea_rows'=>10 );
 							wp_editor( $content, '_ma_service_desc', $settings);
 						?>

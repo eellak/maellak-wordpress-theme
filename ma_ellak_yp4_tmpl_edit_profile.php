@@ -3,43 +3,43 @@
 Template Name: Profile - Edit
 */
 	if (! is_user_logged_in()) // Μόνο εγγεγραμμένοι χρήστες μπορούν να είναι εδώ.
-		header('Location: '.URL.''); 
+		header('Location: '.URL.'');
 	get_header();
 
 	$profile_id = 0;
 	if(isset($_GET['pid']) and $_GET['pid'] !=''){
 		$profile_post = get_post(intval($_GET['pid']));
 		$profile_post_metadata=get_post_meta($_GET['pid']);
-		if(!empty($profile_post) and 'profile' == $profile_post->post_type) 
+		if(!empty($profile_post) and 'profile' == $profile_post->post_type)
 			$profile_id =intval($_GET['pid']);
 	}
 
 	$success = false;
 	$ma_message = '';
-	
+
 	$url = get_permalink(get_option_tree('ma_ellak_edit_profile'));
 	$url .="?pid=".$profile_id;
-	
+
 	$success = false;
 	$ma_message = '';
 	global $ma_prefix;
 
-	
+
 if(!ma_ellak_user_can_edit_post($profile_post)){
-	_e('Δεν έχετε δικαίωμα Επεξεργασίας του Προφίλ','ma-ellak'); 
+	_e('Δεν έχετε δικαίωμα Επεξεργασίας του Προφίλ','ma-ellak');
 }else if($profile_id != 0){
 	$current_logo = get_post_meta($profile_post->ID, $ma_prefix . 'profile_logo', true);
 	if(isset($_POST['publish']) &&isset($_POST['post_nonce_field']) && wp_verify_nonce($_POST['post_nonce_field'], 'post_nonce')) {
 
 		$title = sanitize_text_field($_POST['ctitle']);
-		$description = $_POST['cdescription']; 
-		$status =  sanitize_text_field($_POST['gstatus']);
+		$description = $_POST['cdescription'];
+		//$status =  sanitize_text_field($_POST['gstatus']);
 
 		$tag_list = implode(',', $_POST['tag-select']);
 		if(isset($_POST['selftags'])){
 			$tag_list .= ','.sanitize_text_field($_POST['selftags']);
 		}
-		
+
 		// Ορίζουμε τις κατηγορίες/ταξονομίες
 		$tax1=$tax2=$tax3=$tax4=array();
 		$tax1=array('post_tag'=>$tag_list);
@@ -56,14 +56,14 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 			'post_title'	=> $title,
 			'post_content'	=> $description,
 			'tax_input'		=> $tax,
-			'post_status'	=> $status, 	// publish, preview, future, etc.
+			//'post_status'	=> $status, 	// publish, preview, future, etc.
 		);
 
 		// Καταχωρούμε το Λογισμικό
 		$profile_id = wp_update_post($profile);
-		if($profile_id){		
+		if($profile_id){
 			ma_ellak_profile_save_details($profile_id);
-			
+
 			global $ma_prefix ;
 			if ($_FILES and isset($_POST['replacelogo']) and $_POST['replacelogo'] == 'yes' and $current_logo != '' and !empty($current_logo )) {
 				foreach ($_FILES as $file => $array) {
@@ -71,21 +71,21 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 						insert_attachment($file, $profile_id, $ma_prefix . 'profile_logo');
 				}
 			};
-			
+
 			if( $current_logo == '' or empty($current_logo ) and $_FILES ){
 				foreach ($_FILES as $file => $array) {
 					if(!empty($file))
 						insert_attachment($file, $profile_id, $ma_prefix . 'profile_logo');
 				}
 			}
-			
+
 			$ma_message = '<p class="message">H επεξεργασία Προφίλ ήταν επιτυχής.</p>';
 			$success = true;
 		} else {
 			$ma_message = '<p class="error">Παρουσιάστηκε πρόβλημα και η επεξεργασία δεν ήταν επιτυχής.</p>';
 		}
 	}
-	$gstatus = $profile_post->post_status;
+	//$gstatus = $profile_post->post_status;
 ?>
 <?php get_header(); ?>
 <div class="row-fluid filters">
@@ -96,22 +96,22 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 	<div class="postWrapper" id="post-<?php the_ID(); ?>">
 	<div class="post">
 		<?php /*---------------------- Form ------------------------------------------*/ ?>
-		
+
 		<?php if($success){?>
-			
+
 			<div id="ma-message"><?php echo($ma_message); ?> </div>
 			</div></div>
-		<?php } else { 
+		<?php } else {
 
 		?>
 				<form action="<?php echo $url; ?>" method="post" id="ma_ellak_profile_submit_form" enctype="multipart/form-data">
-					
+
 						<div class="row-fluid">
 					<div class="cols">
 						<div class="span2 characteristic-sidebar software-sidebar">
 							<?php if($current_logo != '' and !empty($current_logo)) { ?>
 								<div class="control-group">
-								
+
 									<label for="current_logo"><?php _e('Υπάρχουσα Φωτογραφία', 'ma-ellak'); ?></label>
 									<input type="checkbox" name="replacelogo" value="yes"> <?php _e('Αντικατάσταση Λογότυπου'); ?>
 									<?php global $ma_prefix; ?>
@@ -119,10 +119,10 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 								</div>
 								<?php }else{?>
 									<label for="logo"><?php _e('Φωτογραφία', 'ma-ellak'); ?></label>
-									<img src="http://localhost/BestPractices/maellak/wp-content/themes/ma_ellak/images/profile.jpg" alt="profile" width="150" height="150">
-							
+									<img src="<?php echo  get_bloginfo('template_directory'); ?>/images/profile.jpg" alt="profile" width="150" height="150">
+
 							<?php }?>
-							
+
 							<br/>
 							<div class="control-group">
 								<input type="file" name="datafile" size="40">
@@ -132,7 +132,7 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 								 <p><?php echo $current_user->user_login;?>
 								<input type="hidden" name="username" id="username" class="input-block-level input required" value="<?php echo $current_user->user_login;?>"/>
 						</div><!-- span5 characteristic-sidebar software-sidebar -->
-						
+
 						<div class="span5 col side-right">
 							<div class="control-group">
 								<label for="ctitle"><?php _e('Ονοματεπώνυμο (*)', 'ma-ellak'); ?></label>
@@ -162,13 +162,13 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 								<label for="phone"><?php _e('Τηλέφωνο επικοινωνίας', 'ma-ellak'); ?></label>
 								<input type="text" name="phone" id="phone" class="input-block-level input required" value="<?php if(isset($_POST['phone'])) echo $_POST['phone']; else if (isset($profile_post_metadata['_ma_profile_phone'][0]))echo $profile_post_metadata['_ma_profile_phone'][0];?>"/>
 							</div>
-							
+
 					   </div><!-- span5 -->
 					</div><!-- cols -->
-										
+
 				</div><!--row-fluid  -->
-					
-				
+
+
 					<!--ΤΕΛΟΣ ΤΩΝ ΓΕΝΙΚΩΝ ΣΤΟΙΧΕΙΩΝ ΤΟΥ ΠΡΟΦΙΛ-->
 						<!-- ΣΤΟΙΧΕΙΑ ΚΟΙΝΩΝΙΚΗΣ ΔΙΚΤΥΩΣΗΣ-->
 					<div class="row-fluid back-gray ">
@@ -190,7 +190,7 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 											<label for="<?php echo $field['id']; ?>"><?php echo $field['name'] ; ?></label>
 											<div class="controls">
 											<input type="text" placeholder="Προσθέσετε το όνομα που χρησιμοποιείτε στο <?php echo $field['name']; ?>" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" class="form-control input-block-level" value="<?php if(isset($_POST[$field['id']])) echo $_POST[$field['id']]; else if(isset($value)) echo $value;?>"  />
-											<span class="help-block">(π.χ. cocacola)</span>
+											<span class="help-block">(π.χ. username)</span>
 											</div>
 										</div>
 									</div>
@@ -202,7 +202,7 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 					<!--ΤΕΛΟΣ ΣΤΟΙΧΕΙΩΝ ΚΟΙΝΩΝΙΚΗΣ ΔΙΚΤΥΩΣΗΣ-->
 			  <div class="control-group">
 						<label for="cdescription"><?php _e('Σύντομο βιογραφικό', 'ma-ellak'); ?></label>
-						<?php 	
+						<?php
 							echo"<br/>";
 							wp_editor( $profile_post->post_content, 'cdescription');
 						?>
@@ -215,52 +215,49 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 					</div>
 				</div>
 				<div class="row-fluid">
-					
+
 					<div class="cols">
-						
+
 						<div class="span6  col side-right">
-						
+
 							<!-- ΑΡΧΗ ΠΑΡΕΧΟΜΕΝΩΝ ΥΠΗΡΕΣΙΩΝ -->
 								<div class="control-group">
 									<label for="jobtype"><?php _e('Αντικείμενο Παρεχόμενης Υπηρεσίας', 'ma-ellak'); ?></label>
-									<?php 	
-										$i=0;
-										$jobtype_terms =wp_get_post_terms($profile_id, 'jobtype');
-										foreach ($jobtype_terms as $term){
-											$arrayTermsTags[$i]= $term->slug;
-											$i++;
-										}
+									<?php
+										$terms = array();
+										foreach (wp_get_post_terms($profile_id, 'jobtype')  as $term)
+											$terms[]= $term->term_id;
 										$jobtype_tax = get_taxonomy('jobtype');
-										echo ma_ellak_add_term_chosebox( $jobtype_tax, 'jobtype-select',false,$arrayTermsTags);
+										echo ma_ellak_add_term_chosebox( $jobtype_tax, 'jobtype-select',true, $terms);
 									?>
 								</div>
-			
+
 								<div class="control-group">
 									<label for="package"><?php _e('Πακέτα Λογισμικού', 'ma-ellak'); ?></label>
-									<?php 
+									<?php
 										$terms = array();
 										foreach (wp_get_post_terms($profile_id, 'package')  as $term)
-											$terms[]= $term->slug;
+											$terms[]= $term->term_id;
 										$package = get_taxonomy('package');
-										echo ma_ellak_add_term_chosebox( $package, 'package-select', false, $terms);
-									?>								
+										echo ma_ellak_add_term_chosebox( $package, 'package-select', true, $terms);
+									?>
 								</div>
 								<div class="control-group">
 									<label for="type"><?php _e('Κατηγορία Λογισμικού', 'ma-ellak'); ?></label>
-									<?php 	
+									<?php
 										$terms = array();
 										foreach (wp_get_post_terms($profile_id, 'type')  as $term)
-											$terms[]= $term->slug;
-										$tagz = get_taxonomy('type'); 
-										echo ma_ellak_add_term_chosebox( $tagz, 'type-select', false, $terms );
+											$terms[]= $term->term_id;
+										$tagz = get_taxonomy('type');
+										echo ma_ellak_add_term_chosebox( $tagz, 'type-select', true, $terms );
 									?>
 								</div>
-					
-						
+
+
 						</div>
 						<div class="span6 characteristic-sidebar software-sidebar">
 							<!--SKILLS-->
-							
+
 							<div class="control-group">
 								<label for="_ma_hourly_rate">Κοστος Ανθρωποωρας</label>
 								<div class="controls">
@@ -284,19 +281,19 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 					<div class="control-group">
 						<label for="cdescription"><?php _e('Περιγραφή παρεχόμενης υπηρεσίας', 'ma-ellak'); ?></label>
 						<?php
-							if(isset($_POST['_ma_service_desc'])) $content = $_POST['_ma_service_desc'];	
+							if(isset($profile_post_metadata['_ma_service_desc'])) $content = $profile_post_metadata['_ma_service_desc'];
 							$settings = array( 'media_buttons' => false, 'textarea_rows'=>10 );
 							wp_editor( $content, '_ma_service_desc', $settings);
 						?>
 					</div>
-					
+
 					<!--ΤΕΛΟΣ ΠΑΡΕΧΟΜΕΝΩΝ ΥΠΗΡΕΣΙΩΝ-->
-				
-					
+
+
 					<!--SKILLS-->
 					<div class="control-group">
 						<label for="tags"><?php _e('Λέξεις Κλειδιά (Skills)', 'ma-ellak'); ?></label>
-						<?php 
+						<?php
 							$terms = array();
 							foreach (wp_get_post_terms($profile_id, 'post_tag')  as $term)
 								$terms[]= $term->slug;
@@ -308,8 +305,8 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 					</div>
 					<!--END OF SKILLS-->
 
-					
-			
+
+
 						<div id="meta_inner"></div>
 						<span class="add btn btn-info btn-xs"><?php _e('Προσθήκη Εμπειρίας','ma-ellak'); ?></span>
 						<?php
@@ -319,7 +316,7 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 						$c = 0;
 						if($experience)
 							if ( count( $experience ) >= 0 ) {
-								foreach( $experience as $exp ) {									
+								foreach( $experience as $exp ) {
 									if ( isset( $exp['_ma_ellak_exp_title'] ) ) {
 										printf( '<div class="container-fluid">
 													<div class="row-fluid">
@@ -342,7 +339,7 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 						<input type="hidden" name="experiencecounter" id="experiencecounter" value="<?php echo $c;?>"/>
 		   				<span id="here"></span>
 						<br/><br/>
-					<?php	if(ma_ellak_user_is_post_admin($profile_post )){ ?>
+					<?php	/* if(ma_ellak_user_is_post_admin($profile_post )){ ?>
 					<div class="admineditor back-gray">
 							<div class="control-group">
 								<label for="gstatus"><?php _e('Κατάσταση', 'ma-ellak'); ?></label>
@@ -355,7 +352,7 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 								</div>
 							</div>
 					</div>
-			<?php	} ?>
+			<?php	} */ ?>
 
 					<div class="control-group">
 						<label for="publish"></label>
@@ -369,7 +366,7 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 		<?php //} /*---------------------- End Form ------------------------------------------*/ ?>
 	</div>
 	<?php }
-		
+
 	?>
 <?php } else {   _e('Πρέπει να επιλέξετε Προφίλ πρώτα!','ma-ellak');  }
  get_footer(); ?>
