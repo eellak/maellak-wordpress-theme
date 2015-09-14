@@ -763,7 +763,7 @@ function profile_list_page($wp_query,$type='all'){
 										else 
 										$description=substr($description, 0, 1000);
 										$description.="...";
-										echo html_entity_decode($description);
+										echo strip_tags($description);
 									}
 									ma_ellak_social_print_data ($post_id, 'profile', 'list');
 								?>
