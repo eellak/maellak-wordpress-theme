@@ -534,7 +534,7 @@ function ma_ellak_get_number_of_custom_types(){
 		$data[$i]['type']='job';
 		$count_job = wp_count_posts('job');
 		$data[$i]['num']=$count_job->publish;
-		$data[$i]['title']=__('Εργασίες','ma_ellak');
+		$data[$i]['title']=__('Έργα προς Ανάπτυξη/Επέκταση','ma_ellak');
 		$jobid = get_option_tree('ma_ellak_list_jobs');
 		$data[$i]['url']= get_permalink($jobid) ;
 		$i++;

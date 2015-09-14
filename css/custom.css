@@ -795,7 +795,7 @@ li.dropdown ul.dropdown-menu li {text-transform:uppercase;}
 .profil-tags a{color:white;}
 .featurette.stats li  {
 color: #fff;
-font-size: 1.25em;
+font-size: 1em;
 font-weight: 700;
 padding-left: .5em;
 text-transform: capitalize;
@@ -829,4 +829,8 @@ background-color: #F2F2F2;}
 #profile-edit-form .field-visibility-settings-notoggle,
 #profile-edit-form .field-visibility-settings-toggle{
 	display:none;
+}
+
+.count, .featurette.stats span {
+  height: 30px;
 }
