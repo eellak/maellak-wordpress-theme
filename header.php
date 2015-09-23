@@ -106,7 +106,7 @@
 				<li><a href="<?php echo get_permalink(get_option_tree('ma_ellak_list_profiles')); ?>"><?php _e('Προφιλ','ma-ellak');?></a></li>
 				<?php }?>
 				<?php if(get_option_tree('ma_ellak_list_profiles')!=''){?>
-				<li><a href="<?php echo get_permalink(get_option_tree('ma_ellak_list_jobs')); ?>"><?php _e('Εργασιες','ma-ellak');?></a></li>
+				<li><a href="<?php echo get_permalink(get_option_tree('ma_ellak_list_jobs')); ?>"><?php _e('Έργα προς Ανάπτυξη/Επέκταση','ma-ellak');?></a></li>
 				<?php }?>
 				</ul>
             </li>
@@ -126,7 +126,7 @@
 				<li><a href="<?php echo get_permalink(get_option_tree('ma_ellak_list_profiles'))."/?action=search"; ?>"><?php _e('Αναζήτηση Προφιλ','ma-ellak');?></a></li>
 				<?php }?>
 				<?php if(get_option_tree('ma_ellak_list_profiles')!=''){?>
-				<li><a href="<?php echo get_permalink(get_option_tree('ma_ellak_list_jobs')); ?>"><?php _e('Αναζήτηση Εργασιας','ma-ellak');?></a></li>
+				<li><a href="<?php echo get_permalink(get_option_tree('ma_ellak_list_jobs')); ?>"><?php _e('Αναζήτηση έργου προς Ανάπτυξη/Επέκταση','ma-ellak');?></a></li>
 				<?php }?>
 				</ul>
             </li>
@@ -186,7 +186,7 @@
 				 <?php
                 $add_job = get_option_tree('ma_ellak_submit_job');
                 if( !empty($add_job) or $add_job != '' ){?>
-                <li><a href="<?php echo get_permalink($add_job); ?>"><?php _e('ΠΡΟΣΘΗΚΗ ΕΡΓΑΣΙΑΣ','ma-ellak');?></a></li>
+                <li><a href="<?php echo get_permalink($add_job); ?>"><?php _e('ΠΡΟΣΘΗΚΗ ΕΡΓΟΥ ΠΡΟΣ ΑΝΑΠΤΥΞΗ/ΕΠΕΚΤΑΣΗ','ma-ellak');?></a></li>
                 <?php }?>
 
 				<?php
