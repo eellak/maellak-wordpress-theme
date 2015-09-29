@@ -106,7 +106,7 @@
 				<li><a href="<?php echo get_permalink(get_option_tree('ma_ellak_list_profiles')); ?>"><?php _e('Προφιλ','ma-ellak');?></a></li>
 				<?php }?>
 				<?php if(get_option_tree('ma_ellak_list_profiles')!=''){?>
-				<li><a href="<?php echo get_permalink(get_option_tree('ma_ellak_list_jobs')); ?>"><?php _e('Εργασιες','ma-ellak');?></a></li>
+				<li><a href="<?php echo get_permalink(get_option_tree('ma_ellak_list_jobs')); ?>"><?php _e('Έργα προς Ανάπτυξη/Επέκταση','ma-ellak');?></a></li>
 				<?php }?>
 				</ul>
             </li>
