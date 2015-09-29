@@ -387,6 +387,7 @@ rownumbers="true" fitColumns="true" singleSelect="true">
 	<th field="ma_institute" width="50" sortable="true"><?php _e('Φορέας','ma-ellak')?></th>
 	<th field="ma_phone" width="50" ><?php _e('Τηλέφωνο','ma-ellak')?></th>
 	<th field="ma_bio" width="50" ><?php _e('Βιογραφικό','ma-ellak')?></th>
+	<th field="ma_part_comment" width="50" ><?php _e('Σχόλιο','ma-ellak')?></th>
 	</tr>
 	</thead>
 </table>

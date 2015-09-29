@@ -38,7 +38,8 @@ Template Name: Event - Export Participants (xls)
 						->setCellValue('E1', 'Θέση')
 						->setCellValue('F1', 'Φορέας')
 						->setCellValue('G1', 'Τηλέφωνο')
-						->setCellValue('H1', 'Βιογραφικό');
+						->setCellValue('H1', 'Βιογραφικό')
+						->setCellValue('I1', 'Σχόλιο');
 			
 			
 			$row = 2;
@@ -55,8 +56,8 @@ Template Name: Event - Export Participants (xls)
 						->setCellValue('E'.$row, $rowr['ma_position'])
 						->setCellValue('F'.$row, $rowr['ma_institute'])
 						->setCellValue('G'.$row, $rowr['ma_phone'])
-						
-						->setCellValue('H'.$row, $rowr['ma_bio'] );
+						->setCellValue('H'.$row, $rowr['ma_bio'] )
+						->setCellValue('I'.$row, $rowr['ma_part_comment'] );
 				$row++;
 			}
 			

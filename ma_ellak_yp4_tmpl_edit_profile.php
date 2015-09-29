@@ -281,7 +281,7 @@ if(!ma_ellak_user_can_edit_post($profile_post)){
 					<div class="control-group">
 						<label for="cdescription"><?php _e('Περιγραφή παρεχόμενης υπηρεσίας', 'ma-ellak'); ?></label>
 						<?php
-							if(isset($profile_post_metadata['_ma_service_desc'])) $content = $profile_post_metadata['_ma_service_desc'];
+							if(isset($profile_post_metadata['_ma_service_desc'])) $content = $profile_post_metadata['_ma_service_desc'][0];
 							$settings = array( 'media_buttons' => false, 'textarea_rows'=>10 );
 							wp_editor( $content, '_ma_service_desc', $settings);
 						?>

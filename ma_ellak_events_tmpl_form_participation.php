@@ -4,18 +4,18 @@ Template Name: Event - Participation
 */
 
 	// if (! is_user_logged_in()) // Μόνο εγγεγραμμένοι χρήστες μπορούν να είναι εδώ.
-//		header('Location: '.URL.''); 
-	
+//		header('Location: '.URL.'');
+
 	$cur_user = wp_get_current_user();
-	
+
 	$success = false;
 	$ma_message = '';
-	
+
 	if(isset($_POST['ma_ellak_events_participation_submit']) && isset($_POST['post_nonce_field']) && wp_verify_nonce($_POST['post_nonce_field'], 'post_nonce')) {
 		global $wpdb;
 		$upload=0;
 		if( function_exists( 'cptch_check_custom_form' ) && cptch_check_custom_form() === true ) {
-		
+
 			$name = sanitize_text_field($_POST['namez']);
 			$surname = sanitize_text_field($_POST['surnamez']);
 			$email = sanitize_text_field($_POST['emailz']);
@@ -23,7 +23,8 @@ Template Name: Event - Participation
 			$ma_position = sanitize_text_field($_POST['ma_position']);
 			$ma_institute = sanitize_text_field($_POST['ma_institute']);
 			$ma_phone = sanitize_text_field($_POST['ma_phone']);
-			
+			$ma_part_comment = sanitize_text_field($_POST['ma_part_comment']);
+
 			// Check if mail exists
 			$query = "SELECT count(*) FROM ma_events_participants where events_id=$events_id and email like '$email%'";
 			$user_email_already = $wpdb->get_var( $query );
@@ -31,7 +32,7 @@ Template Name: Event - Participation
 			if($user_email_already != 0){
 				$ma_message .= '<p class="error">Παρουσιάστηκε πρόβλημα και η καταχώριση. Το δηλωθέν email έχει ήδη καταχωρηθεί.</p>';
 			} else {
-			
+
 				if(isset($_FILES["fileToUpload"]["name"])){
 				$ma_bio = sanitize_text_field($_FILES["fileToUpload"]["name"]);
 					if (file_exists(ABSPATH."wp-content/files/bios/" . $_FILES["fileToUpload"]["name"]))
@@ -50,24 +51,25 @@ Template Name: Event - Participation
 						'events_id'	=> $events_id,
 						'name'	=> $name,
 						'surname'	=> $surname,
-						'email'		=> $email,	
-						'ma_position'=>$ma_position,			
-						'ma_institute'=>$ma_institute,			
+						'email'		=> $email,
+						'ma_position'=>$ma_position,
+						'ma_institute'=>$ma_institute,
 						'ma_phone'=>$ma_phone,
-						'ma_bio'=>$ma_bio,			
+						'ma_bio'=>$ma_bio,
+						'ma_part_comment' => $ma_part_comment,
 				);
-				$format= array('%s','%s','%s', '%d','%s' );
-				// Καταχωρούμε τη συμμετοχή 
+				$format= array('%s','%s','%s', '%d','%s', '%s' );
+				// Καταχωρούμε τη συμμετοχή
 				if($upload!=-1){
 					$wpdb->insert( 'ma_events_participants', $participation );
 					$wpdb->show_errors();
 					$id = $wpdb->insert_id;
 				}
 				if($id && $upload!=-1){
-					
+
 					$ma_message = '<p class="message">H καταχώριση σας ήταν επιτυχής.</p>';
 					$success = true;
-					
+
 					// Αποστολή email στον διαχειριστή/υπεύθυνο
 					$email_message = 'Νέα συμμετοχή με όνομα: '.$name;
 					$unit_id = get_post_meta($events_id, '_ma_ellak_belongs_to_unit', true);
@@ -76,7 +78,7 @@ Template Name: Event - Participation
 						$mail_message .= 'Αφορά την εκδήλωση '.get_the_title($events_id).' ( '.get_permalink($events_id).' ).\r\n\r\n';
 						$mail_message .= 'Επεξεργαστείτε την συμμετοχή '.get_permalink(get_option_tree('ma_ellak_update_event'))."?id=".$events_id.' \r\n\r\n';
 						$mail_message .= 'Διαχείριση Δικτυακής Πύλης Μονάδων Αριστείας ΕΛ/ΛΑΚ \r\n\r\n';
-						
+
 						$admin_users = get_users(array('meta_key' => '_ma_ellak_admin_unit', 'meta_value' =>$unit_id ));
 						foreach ($admin_users as $user) {
 							wp_mail( $user->user_email, 'Μονάδες Αριστείας ΕΛ/ΛΑΚ - Νέα συμμετοχή στην Εκδήλωση - Σεμινάριο', $mail_message );
@@ -87,13 +89,13 @@ Template Name: Event - Participation
 					$ma_message .= '<p class="error">Παρουσιάστηκε πρόβλημα και η καταχώριση. Δεν ήταν επιτυχής.</p>';
 				}
 			}
-		}else 
+		}else
 			$ma_message = '<p class="error">Παρουσιάστηκε πρόβλημα και η καταχώριση. Δεν ήταν επιτυχής.Πρέπει να συμπληρώσετε το captcha</p>';
-			
-	} 
+
+	}
 
 ?>
-<?php get_header(); 
+<?php get_header();
 
 if(isset($_GET['events_id']))
 	$events_id = absint($_GET['events_id']);
@@ -119,53 +121,53 @@ $endd = $custom['_ma_event_enddate_timestamp'][0]?date(MA_DATE_FORMAT,strtotime(
 $event_type = $custom['_ma_events_type'][0];
 
 ?>
-  
+
    <?php while ( have_posts() ) : the_post(); ?>
 	 <div class="row-fluid filters">
           <div class="span6">
             <p><a href="<?php echo get_permalink($events_id)?>"><?php echo __('ΠΙΣΩ','ma-ellak');?>
-            <?php get_event_type_label($event_type); 
+            <?php get_event_type_label($event_type);
 						?>
-            
+
             </a></p>
           </div>
-   	</div>  
+   	</div>
    	 <div class="row-fluid event">
 		  	<div class="cols">
 		  		<div class="span12">
-					  <h3><a href="<?php get_permalink($events_id) ?>" rel="bookmark"  
+					  <h3><a href="<?php get_permalink($events_id) ?>" rel="bookmark"
 				  	title="<?php echo get_the_title($events_id);?>" class="btn btn-large btn-link"><?php echo get_the_title($events_id); ?></a></h3>
 					  <p  class="meta purple">
-					  <?php get_event_type_label($event_type); 
+					  <?php get_event_type_label($event_type);
 						?>
-					  <?php ma_ellak_print_unit_title($cid); ?> 
-					 
+					  <?php ma_ellak_print_unit_title($cid); ?>
+
 					  <?php echo ma_ellak_print_thema($events_id,'thema');?>
 					  <?php echo $startd; if($endd) echo"-". $endd;?></p>
 					  <p  class="meta purple">
 					  <?php if($place){?>
-					  <?php echo __( 'ΣΤΟ', 'ma-ellak' );?>  
-					  <strong class="magenta"><?php echo $place?></strong> 
+					  <?php echo __( 'ΣΤΟ', 'ma-ellak' );?>
+					  <strong class="magenta"><?php echo $place?></strong>
 					  <?php }?>
 					  <?php if($address)?>
 					  <strong ><?php echo $address;?></strong></p>
-					  
+
 				</div><!-- span8 text col -->
 		  	</div><!-- cols -->
 	  </div><!-- row-fluid event -->
-	
+
 	<?php endwhile; ?>
    	 <div class="row-fluid event">
 		<?php /*---------------------- Form ------------------------------------------*/ ?>
 		<div id="ma-message"><?php echo($ma_message); ?> </div>
-		<?php if($success){ } else { 
-		
+		<?php if($success){ } else {
+
 			$url = get_permalink(get_option_tree('ma_ellak_view_event_option_id'));
 			$url .="?events_id=".$events_id;
 			?>
 		<div class="yamm-content events">
             <div class="row-fluid">
-        
+
 			<form action="<?php echo $url; ?>" method="post" id="ma_ellak_software_submit_form" enctype="multipart/form-data" class="form-horizontal span12">
 				<fieldset class="form-vertical span4 offset2">
 				<div class="control-group">
@@ -174,7 +176,7 @@ $event_type = $custom['_ma_events_type'][0];
 					<input type="text" name="namez" id="namez" class="form-control input-block-level required" value="<?php if(isset($_POST['namez'])) echo $_POST['namez'];?>"  />
 					</div>
 				</div>
-				
+
 				<div class="control-group">
 					<label class="control-label span12" for="surnamez"><?php _e('Επώνυμο', 'ma-ellak'); ?> (*)</label>
 					<div class="controls">
@@ -215,9 +217,15 @@ $event_type = $custom['_ma_events_type'][0];
     			 	</div>
     			 </div>
     			 <?php }?>
+				 <div class="control-group">
+					<label class="control-label span12" for="ma_part_comment"><?php _e('Σχόλιο', 'ma-ellak'); ?></label>
+					<div class="controls">
+						<textarea name="ma_part_comment" id="ma_part_comment" class="form-control input-block-level " ><?php if(isset($_POST['ma_part_comment'])) echo $_POST['ma_part_comment'];?></textarea>
+					</div>
+				</div>
 				<div class="control-group">
 				<?php if( function_exists( 'cptch_display_captcha_custom' ) ) { echo "<input type='hidden' name='cntctfrm_contact_action' value='true' />"; echo cptch_display_captcha_custom(); } ?>
-				
+
 				</div>
 				<input type="hidden" id="events_id" name="events_id" value="<?php echo $events_id; ?>" />
 				 <div class="control-group">
@@ -227,17 +235,17 @@ $event_type = $custom['_ma_events_type'][0];
                           </div>
                         </div>
 				</fieldset>
-				
-				
+
+
 				<?php wp_nonce_field('post_nonce', 'post_nonce_field'); ?>
 			</form>
 			</div>
-			
+
 		<?php } ?>
 		<?php } //	if(!isset($chekcData) || $chekcData->post_type!='events' || $custom['_ma_events_participate'][0]!='yes'){
 			?>
 		<?php /*---------------------- End Form ------------------------------------------*/ ?>
 	</div>
-</div>	
-<?php } //no events_id ?> 
+</div>
+<?php } //no events_id ?>
 <?php get_footer(); ?>
