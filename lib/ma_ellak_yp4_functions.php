@@ -4,7 +4,7 @@
 *
 * @licence GPL
 * @author Fotis Routsis - fotis@routsis.gr
-* 
+*
 * Project URL http://ma.ellak.gr
 */
 
@@ -46,7 +46,7 @@ function ma_ellak_register_job_posttype() {
 	);
 
 	register_post_type( 'job' , $args  );
-	
+
 	$labels = array(
 		'name' 					=> _x( 'Προφίλ', 'γενικό όνομα', 'ma-ellak' ),
 		'singular_name' 		=> _x( 'Προφίλ', 'γενικό όνομα', 'ma-ellak' ),
@@ -80,7 +80,7 @@ function ma_ellak_register_job_posttype() {
 	);
 
 	register_post_type( 'profile' , $args  );
-	
+
 	$labels = array(
 		'name' 				=> _x( 'Είδος Εργασίας', 'γενικό όνομα', 'ma-ellak' ),
 		'singular_name' 	=> _x( 'Είδος Εργασίας', 'γενικό όνομα', 'ma-ellak' ),
@@ -105,7 +105,7 @@ function ma_ellak_register_job_posttype() {
 }
 
 global $ma_prefix ;
-global $job_fields ; 
+global $job_fields ;
 global $profile_fields ;
 global $social_fields;
 
@@ -121,7 +121,7 @@ $job_fields =  array(
 					array( 'name' => __('Αδιάφορο', 'ma-ellak'), 'value' => 'nomatter', ),
 				),
 			),
-			
+
 			array(
 				'name' => __('Στοιχεία Υπευθύνου - Ονοματεπώνυμο', 'ma-ellak'),
 				'desc' => __('Στοιχεία Υπευθύνου Επικοινωνίας για την Προσφορά.', 'ma-ellak'),
@@ -146,7 +146,7 @@ $job_fields =  array(
 					'id'   => $ma_prefix . 'job_contact_point_phone',
 					'type' => 'text',
 			),
-		
+
 			array(
 				'name' => __('Κατάσταση', 'ma-ellak'),
 				'desc' => __('Η κατάσταση του Εργασίας', 'ma-ellak'),
@@ -169,7 +169,7 @@ $job_fields =  array(
 					array( 'name' => __('Όχι', 'ma-ellak'), 'value' => 'no', ),
 				),
 			),
-			
+
 			array(
 				'name' => __('Αξιολόγηση Αναδόχου', 'ma-ellak'),
 				'desc' => __('Αξιολογήστε τον Επαγγελματία/Εθελοντή', 'ma-ellak'),
@@ -184,22 +184,22 @@ $job_fields =  array(
 					array( 'name' => '5', 'value' => '5', ),
 				),
 			),
-			
+
 			array(
 				'name' => __('Περιγραφή Ολοκλήρωσης Εργασίας', 'ma-ellak'),
 				'desc' => __('Σύντομη Περιγραφή μετά την Ολοκλήρωση της Εργασίας', 'ma-ellak'),
 				'id'   => $ma_prefix . 'job_complete_comment',
 				'type' => 'textarea',
 			),
-			
+
 			array(
 				'name' => __('Ημερομηνία Λήξης', 'ma-ellak'),
 				'desc' => __('Ημερομηνία Λήξης της Προσφοράς', 'ma-ellak'),
 				'id'   => $ma_prefix . 'job_expiration',
 				'type' => 'text_date_timestamp',
 			),
-			
-			
+
+
 		);
 
 $profile_fields =  array(
@@ -227,8 +227,13 @@ $profile_fields =  array(
 
 $social_fields=array(
 	array(
-		'name' => __('Facebook', 'ma-ellak'),
-		'id'   => $ma_prefix . 'profile_facebook',
+		'name' => __('GitHub', 'ma-ellak'),
+		'id'   => $ma_prefix . 'profile_github',
+		'type' => 'text',
+	),
+	array(
+		'name' => __('Linkedin', 'ma-ellak'),
+		'id'   => $ma_prefix . 'profile_linkedin',
 		'type' => 'text',
 	),
 	array(
@@ -237,8 +242,8 @@ $social_fields=array(
 		'type' => 'text',
 	),
 	array(
-		'name' => __('Linkedin', 'ma-ellak'),
-		'id'   => $ma_prefix . 'profile_linkedin',
+		'name' => __('Facebook', 'ma-ellak'),
+		'id'   => $ma_prefix . 'profile_facebook',
 		'type' => 'text',
 	),
 );
@@ -287,7 +292,7 @@ add_filter( 'cmb_meta_boxes', 'ma_ellak_job_metabox' );
 //Δηλώνουμε την εμφάνιση του metabox για τον τύπο αντικειμένου Προσφορά [2/2]
 function ma_ellak_job_metabox( array $meta_boxes ) {
 
-	global $job_fields; 
+	global $job_fields;
 	global $profile_fields;
 	global $social_fields;
 	global $personal_fields;
@@ -328,11 +333,11 @@ function ma_ellak_yp4_meta_boxes() {
 function ma_ellak_yp4_scripts() {
 	$template_dir =  get_bloginfo('template_directory');
 
-	if (is_page_template('ma_ellak_yp4_tmpl_add_job.php') or is_page_template('ma_ellak_yp4_tmpl_edit_job.php') or 
+	if (is_page_template('ma_ellak_yp4_tmpl_add_job.php') or is_page_template('ma_ellak_yp4_tmpl_edit_job.php') or
 		is_page_template('ma_ellak_yp4_tmpl_add_profile.php') or is_page_template('ma_ellak_yp4_tmpl_edit_profile.php')) {
 		wp_enqueue_style( 'ma_ellak_chosen_css', $template_dir . '/scripts/tagselect/chosen/chosen.css' );
 		wp_enqueue_style( 'ma_ellak_tagselect_css',  $template_dir . '/scripts/tagselect/tagselect.css');
-			
+
 		wp_enqueue_script( 'ma_ellak_chosen_js', $template_dir . '/scripts/tagselect/chosen/chosen.jquery.min.js', array('jquery'), '1.0', true );
 		wp_enqueue_script( 'ma_ellak_tagselect_js',  $template_dir . '/scripts/tagselect/tagselect.js',  array('jquery'), '1.0', true );
 		// From init.php
@@ -353,14 +358,14 @@ function ma_ellak_yp4_scripts() {
 	if ( is_page_template('ma_ellak_yp4_tmpl_edit_job.php') ) {
 		wp_enqueue_script( 'ma_ellak_validate_yp4_job_edit',  $template_dir . '/js/validate_yp4_tmpl_edit_job.js',  array('jquery'), '1.0', true );
 	}
-	
+
 	if ( is_page_template('ma_ellak_yp4_tmpl_hire.php') ) {
 		wp_enqueue_script( 'ajax_yp4_hire_job', $template_dir . '/js/ajax_yp4_hire_job.js', array( 'jquery' ), '1.0', true );
 		wp_localize_script( 'ajax_yp4_hire_job', 'ajax_request_hire_settings', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' )
 		) );
 	}
-	
+
 	global $post;
 	if(get_post_type($post->ID) == 'job'){
 		wp_enqueue_script( 'ajax_job_application', $template_dir . '/js/ajax_yp4_job_application.js', array( 'jquery' ), '1.0', true );
@@ -391,15 +396,15 @@ function ma_ellak_job_profile_save_details($user_id, $jobs_hire){
 
 // Αποθηκεύει τα έξτρα πεδία (post meta) απο τη φόρμα front-end υποβολής
 function ma_ellak_job_save_details( $post_id ){
-	
-	global $ma_prefix ; 
-	
+
+	global $ma_prefix ;
+
 	global $job_fields;
-	foreach($job_fields as $field){		
+	foreach($job_fields as $field){
 		if ( isset( $_POST[$field['id']]) )
 			update_post_meta( $post_id, $field['id'],  $_POST[$field['id']] );
 	}
-	
+
 	$unit_id =  ma_ellak_get_unit_id();
 		if( $unit_id != 0)
 			update_post_meta( $post_id, '_ma_ellak_belongs_to_unit',$unit_id );
@@ -439,7 +444,7 @@ function ma_ellak_profile_save_details( $post_id ){
 		update_post_meta( $post_id, $ma_prefix.'profile_url',  $_POST['url'] );
 	else
 		delete_post_meta( $post_id, $ma_prefix.'profile_url' );
-	
+
 	if ( isset( $_POST['phone'] ) )
 		update_post_meta( $post_id, $ma_prefix.'profile_phone',  $_POST['phone'] );
 	else
@@ -467,16 +472,16 @@ function ma_ellak_profile_save_details( $post_id ){
 
 	if(isset($_POST['experience']) && $_POST['experience']!=''){
 		update_post_meta( $post_id, '_ma_ellak_profile_experience',  $_POST['experience'] );
-	}	
+	}
 	else
 		delete_post_meta( $post_id, '_ma_ellak_profile_experience' );
 }
 
 function get_job_status_name($status){
-	
+
 	$details = '<span class="'.$status.'">';
-	if($status == 'active') $details .= __('Ενεργή', 'ma-ellak'); 
-	if($status == 'processed') $details .= __('Σε εξέλιξη', 'ma-ellak'); 
+	if($status == 'active') $details .= __('Ενεργή', 'ma-ellak');
+	if($status == 'processed') $details .= __('Σε εξέλιξη', 'ma-ellak');
 	if($status == 'done') $details .= __('Ολοκληρωμένη', 'ma-ellak');
 	if($status == 'inactive') $details .= __('Μη Ενεργή', 'ma-ellak');
 	$details .='</span>';
@@ -491,9 +496,9 @@ function user_has_profile($user_id = 0){
 	$args = array(
 		'post_per_page' => 1,
 		'post_type' => 'profile',
-		'post_status' => 'publish', 
+		'post_status' => 'publish',
 		'author' => $user_id
-	); 
+	);
 	$profiles = get_posts($args);
 	if(count($profiles) > 0)
 		return true;
@@ -512,15 +517,15 @@ function user_has_applied_for($user_id, $job_id){
 function user_can_apply_for($user_id, $job_id){
 	global $ma_prefix ;
 	$type = get_post_meta( $job_id, $ma_prefix . 'job_applicant_type', true);
-	
+
 	$args = array(
 		'post_per_page' => 1,
 		'post_type' => 'profile',
-		'post_status' => 'publish', 
+		'post_status' => 'publish',
 		'author' => $user_id
-	); 
+	);
 	$profiles = get_posts($args);
-	
+
 	if(count($profiles) > 0){
 		foreach($profiles as $profile){
 			$user_type = get_post_meta( $profile->ID, $ma_prefix . 'user_applicant_type', true);
@@ -551,7 +556,7 @@ function get_job_stats(){
 		'done' => 0,
 		'inactive' => 0,
 	);
-	
+
 	$args = array(
 		'post_per_page' => -1,
 		'post_type' => 'job',
@@ -561,7 +566,7 @@ function get_job_stats(){
 	$posts = get_posts($args);
 	$stats['all'] = count($posts);
 	global $ma_prefix;
-	
+
 	foreach($posts as $post){
 		$job_status = get_post_meta($post->ID, $ma_prefix . 'job_status', true);
 		if(array_key_exists($job_status, $stats))
@@ -569,7 +574,7 @@ function get_job_stats(){
 		else
 			$stats[$job_status] =  1;
 	}
-	
+
 	return $stats;
 }
 
@@ -584,7 +589,7 @@ function ma_ellak_yp4_experience() {
 		__( 'Εμπειρία', 'ma-ellak' ),
 		'ma_ellak_yp4_exp_inner_custom_box',
 		'profile',
-		'normal',//The part of the page where the edit screen section should be shown ('normal', 'advanced', or 'side'). 
+		'normal',//The part of the page where the edit screen section should be shown ('normal', 'advanced', or 'side').
       	'high' //The priority within the context where the boxes should show ('high', 'core', 'default' or 'low')
 	);
 }
@@ -605,7 +610,7 @@ function ma_ellak_yp4_exp_inner_custom_box() {
 	if($experience)
 	 if ( count( $experience ) >= 0 ) {
 	 	foreach( $experience as $exp ) {
-	 		
+
 	 		if ( isset( $exp['_ma_ellak_exp_title'] ) ) {
 	 			printf( '<p><strong>Τίτλος</strong> <input type="text" name="experience[%1$s][_ma_ellak_exp_title]" id="_ma_ellak_exp_title%1$s"  value="%2$s" /> <strong>Φορέας</strong> <input type="text" name="experience[%1$s][_ma_ellak_exp_entity]" id="_ma_ellak_exp_entity%1$s"  value="%3$s" /> <strong>Url</strong> <input type="text" name="experience[%1$s][_ma_ellak_exp_url]" value="%4$s" id="_ma_ellak_exp_url%1$s" /> <br><strong>Περιγραφή</strong> <textarea name="experience[%1$s][_ma_ellak_exp_desc]" id="_ma_ellak_exp_desc%1$s" rows="2" cols="5">%5$s</textarea> <strong>Από</strong> <input type="text-date" name="experience[%1$s][_ma_ellak_exp_from]" id="_ma_ellak_exp_from%1$s"  value="%6$s" /> <strong>Έως</strong> <input type="text-date" name="experience[%1$s][_ma_ellak_exp_to]" id="_ma_ellak_exp_to%1$s"  value="%7$s" /> <span class="remove">%8$s</span></p>', $c, $exp['_ma_ellak_exp_title'], $exp['_ma_ellak_exp_entity'], $exp['_ma_ellak_exp_url'], $exp['_ma_ellak_exp_desc'], $exp['_ma_ellak_exp_from'],$exp['_ma_ellak_exp_to'],"<span class='button button-warning button-small'>".__( ' - Αφαίρεση','ma-ellak' )."</span>" );
 	 			$c = $c +1;
@@ -628,7 +633,7 @@ function ma_ellak_yp4_exp_inner_custom_box() {
 	         $(".add").click(function() {
 	             count = count + 1;
 	             $('#here').append('<p><strong>Τίτλος</strong><input type="text" name="experience['+count+'][_ma_ellak_exp_title]" id="_ma_ellak_exp_title'+count+'"  class="required title" value="" /> <strong>Φορέας</strong><input type="text" name="experience['+count+'][_ma_ellak_exp_entity]" id="_ma_ellak_exp_entity'+count+'"  class="required entity" value="" /> <strong>Url </strong><input type="text" name="experience['+count+'][_ma_ellak_exp_url]" id="_ma_ellak_exp_url'+count+'" value="" /> <br><strong>Περιγραφή</strong><textarea name="experience['+count+'][_ma_ellak_exp_desc]" id="_ma_ellak_exp_desc'+count+'" value="" rows="2" cols="5"/>  <strong>Από</strong><input type="text-date" name="experience['+count+'][_ma_ellak_exp_from]" id="_ma_ellak_exp_from'+count+'"  class="required from date" value="" /> <strong>Έως</strong><input type="text-date" name="experience['+count+'][_ma_ellak_exp_to]" id="_ma_ellak_exp_to'+count+'"  class="required to date" value="" /> <span class="remove button button-danger button-small"> Αφαίρεση</span>' );
-				 return false; 
+				 return false;
 	         });
 	         $(".remove").live('click', function() {
 	             $(this).parent().remove();
@@ -637,15 +642,15 @@ function ma_ellak_yp4_exp_inner_custom_box() {
 	     </script>
 	 <?php
 	 }
-	 
+
 /* When the post is saved, saves our custom data */
 function ma_ellak_yp4_experience_save_postdata( $post_id ) {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 		return;
-	 
+
 	if ( !isset( $_POST['dynamicMeta_noncename'] ) )
 		return;
-	 
+
 	if ( !wp_verify_nonce( $_POST['dynamicMeta_noncename'], plugin_basename( __FILE__ ) ) )
 		return;
 
@@ -714,7 +719,7 @@ function profile_list_page($wp_query,$type='all'){
 			$meta=get_post_meta($post_id);
 			$logo=$meta['_ma_profile_logo'][0];
 			$link=get_permalink();
-			
+
 			$post_data=get_post($post_id);
 			$name=$post_data->post_title;
 			$description=$post_data->post_content;
@@ -722,7 +727,7 @@ function profile_list_page($wp_query,$type='all'){
 			$link=get_permalink();
 			$status=$post_data->post_status;
 			$property=$post_data->_ma_profile_property;
-			
+
 			?>
 				<div class="row-fluid event">
 					<div class="cols">
@@ -731,10 +736,10 @@ function profile_list_page($wp_query,$type='all'){
 					<?php }else{?>
 						<div class="span3 col">
 					<?php }?>
-					
+
 							<div class="boxed-in text-center the-date">
 								<p class="magenta">
-									<?php 
+									<?php
 										if ($logo!=""){
 											$thumbnail=get_profile_logo($logo);
 											echo "<img src=\"". $thumbnail ."\" alt=\"".$name."\" title=\"".$name."\">";
@@ -760,7 +765,7 @@ function profile_list_page($wp_query,$type='all'){
 										//echo html_entity_decode($description);
 										if($type=='search')
 										$description=substr($description, 0, 800);
-										else 
+										else
 										$description=substr($description, 0, 1000);
 										$description.="...";
 										echo strip_tags($description);
@@ -770,7 +775,7 @@ function profile_list_page($wp_query,$type='all'){
 							</div><!-- span8 text col -->
 						</div><!-- cols -->
 				</div>
-	
+
 	<?php
 	endwhile;
 	endif;
@@ -808,20 +813,20 @@ function ma_ellak_profile_get_active_query($limit){
 
 	$result = mysql_query("SELECT DISTINCT b.ID, c.meta_value FROM {$wpdb->users} a, {$wpdb->posts} b, {$wpdb->usermeta} c
 		WHERE b.post_author=a.ID AND a.ID=c.user_id AND c.meta_key='". $ma_prefix ."all_jobs_selected' AND b.post_type='profile' AND b.post_status='publish'");
-	
+
 	$k=0;
 	while($row=mysql_fetch_row($result)){
 		$unserialized_data=unserialize($row[1]);
 		$data[]=array('id'=> $row[0], 'jobs'=>count($unserialized_data));
 	}
-	
+
 	foreach ($data as $key => $row) {
 		$ids[$key]  = $row['id'];
 		$jobs[$key] = $row['jobs'];
 	}
 
 	array_multisort($jobs, SORT_DESC, $data);
-	
+
 	// Query arguments for WP_Query
 	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 	$args = array(
@@ -894,8 +899,8 @@ function ma_ellak_get_profile_experience($profile_id){
 									echo"<strong class=\"magenta\">";
 									echo " ". $title;
 									echo"</strong><BR>";
-					
-					
+
+
 					if ($entity!=''){
 						echo "<span class='magenta'>".__('Φορέας:', 'ma_ellak')."</span>";
 									echo"<strong class=\"magenta\">";
@@ -934,7 +939,7 @@ function ma_ellak_profiles_upper_bar(){
 				<?php }?>
 				<li><a href="<?php echo $link_page; ?>?action=active"
 				class="<?php if (isset($_GET['action']) && $_GET['action']=='active') echo'active-menu';?>">
-				
+
 				<?php _e('ΕΝΕΡΓΑ ΠΡΟΦΙΛ', 'ma-ellak');?> </a></li>
 				<li>|</li>
 				<li><a href="<?php echo $link_page; ?>?action=popular"
@@ -957,7 +962,7 @@ function ma_ellak_profile_search_page($limit){
 	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 	$args = array(
 		'post_type' => 'profile',
-		'post_status' => 'publish', 
+		'post_status' => 'publish',
 		'paged' => $paged,
 		'posts_per_page' => $limit,
 		'suppress_filters' => false,
@@ -967,7 +972,7 @@ function ma_ellak_profile_search_page($limit){
 	if (isset($_GET['submit'])){
 		$args['tax_query'] = array();
 		$args['tax_query']['relation'] = 'AND';
-		
+
 		foreach($_GET as $key=>$value){
 			if($key=='submit') continue;
 			if($key=='action' ) continue;
@@ -992,12 +997,12 @@ function ma_ellak_profile_search_page($limit){
 			}
 		}
 	}
-	
+
 	$wp_query=ma_ellak_yp4_get_results($args);
-	
-	
-	
-	
+
+
+
+
 	//$posts = get_posts($args);
 ?>
 	<div class="row-fluid">
@@ -1009,10 +1014,10 @@ function ma_ellak_profile_search_page($limit){
 			<div class="row-fluid event">
 			<div class="cols">
 				<div class="span11 text col">
-					
+
 					<?php
 						if ($_GET['type']!='0' || $_GET['package']!='0' || $_GET['jobtype']!='0' || $_GET['_ma_profile_type']!=''){
-							?><h4><?php _e('Αποτελέσματα αναζήτησης', 'ma_ellak'); 
+							?><h4><?php _e('Αποτελέσματα αναζήτησης', 'ma_ellak');
 							_e(' με τα ακόλουθα κριτήρια: ', 'ma_ellak');
 						echo "</h4>";
 						if (isset($_GET['type']) && $_GET['type']!='0'){
@@ -1058,14 +1063,14 @@ function ma_ellak_profile_search_page($limit){
 		_e('Δεν έχουν καταχωρηθεί ακόμη προφίλ στην πλατφόρμα.', 'ma_ellak');
 	?>
 	</div><!-- span8 -->
-	
+
   	<div class="span4">
 		<h4><?php _e('Φίλτρα Αναζήτησης', 'ma_ellak'); ?></h4>
 		<form action="<?php echo get_permalink(get_option_tree('ma_ellak_list_profiles')); ?>" method="get" class="span12" id="searchprofile">
 			<ul>
 				<li>
 					<label for="type"><?php _e('Κατηγορία Λογισμικού', 'ma-ellak'); ?></label>
-					<?php 
+					<?php
 						wp_dropdown_categories(
 							array(
 								'walker' => new ma_ellak_Walker_TaxonomyDropdown,
@@ -1076,8 +1081,8 @@ function ma_ellak_profile_search_page($limit){
 								'name'=> 'type',
 								'taxonomy'=> 'type',
 								'selected' =>  $wp_query->query['type'],
-							)	
-						); 
+							)
+						);
 					?>
 				</li>
 				<li>
@@ -1094,12 +1099,12 @@ function ma_ellak_profile_search_page($limit){
 								'taxonomy'=> 'package',
 								'selected' =>  $wp_query->query['package'],
 							)
-						); 
+						);
 					?>
 				</li>
 				<li>
 					<label for="jobtype"><?php _e('Αντικείμενο παρεχόμενης υπηρεσίας', 'ma-ellak'); ?></label>
-					<?php 
+					<?php
 						wp_dropdown_categories(
 							array(
 								'walker' => new ma_ellak_Walker_TaxonomyDropdown,
@@ -1111,7 +1116,7 @@ function ma_ellak_profile_search_page($limit){
 								'taxonomy'=> 'jobtype',
 								'selected' =>  $wp_query->query['jobtype'],
 							)
-						); 
+						);
 					?>
 				</li>
 				<li>
@@ -1131,12 +1136,12 @@ function ma_ellak_profile_search_page($limit){
 		</form>
 	</div>
 
-	<?php 
+	<?php
 if ($wp_query->found_posts>$limit)
 		pagination(false, false, $wp_query);
 	?>
  </div>
- <?php 
+ <?php
  }
 
 function ma_ellak_send_email_users($jobtype, $package, $profile_type){
