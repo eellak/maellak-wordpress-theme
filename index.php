@@ -9,8 +9,12 @@
 ?>
  <div id="carousel" class="carousel slide">
       <img class="logo absolutionized hidden-tablet hidden-phone" src="<?php echo get_template_directory_uri();?>/images/logo_normal.png" width="283" height="180" alt="Logo Normal" />
+	  
+	  <a href="https://github.com/ellak-monades-aristeias/" targer="_blank"><img class="logo absolutionized_l hidden-tablet hidden-phone" src="<?php echo get_template_directory_uri();?>/images/ma_github_sm.png" width="283" height="180" alt="GitHub ellak Logo Normal" /></a>
 
       <img class="logo logo-ipad absolutionized hidden-desktop" src="<?php echo get_template_directory_uri();?>/images/logo_ipad.png" width="202" height="128" alt="Logo Ipad" />
+	  
+	  <a href="https://github.com/ellak-monades-aristeias" targer="_blank"><img class="logo logo-ipad absolutionized_l hidden-desktop" src="<?php echo get_template_directory_uri();?>/images/ma_github_ipad.png" width="202" height="128" alt="GitHub ellak Logo Ipad" /></a>
 
       <img src="<?php echo get_template_directory_uri();?>/images/graphic-banner-overlay.png" alt="Logo Overlay" class="caption-overlay"  />
 
