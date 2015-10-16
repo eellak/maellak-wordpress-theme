@@ -863,13 +863,23 @@ input[type="color"],
 }
 .logo.absolutionized {
   top: 0;
-  left: 50%;
+  left: 35%;
+  z-index: 10;
+  position: absolute;
+  margin-left: -142px;
+}
+.logo.absolutionized_l {
+  top: 0;
+  right: 25%;
   z-index: 10;
   position: absolute;
   margin-left: -142px;
 }
 .logo-ipad.absolutionized {
   margin-left: -101px;
+}
+.logo-ipad.absolutionized_l {
+  margin-right: -101px;
 }
 
 .main h1,
