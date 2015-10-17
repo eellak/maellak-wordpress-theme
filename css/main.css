@@ -881,7 +881,16 @@ input[type="color"],
 .logo-ipad.absolutionized_l {
   margin-right: -101px;
 }
-
+@media screen and (max-width: 480px) {
+    .logo-ipad.absolutionized {
+		margin-left: -51px;
+		width: 40%;
+	}
+	.logo-ipad.absolutionized_l {
+		margin-right: -51px;
+		width: 30%;
+	}
+}
 .main h1,
 .main h2 {
   border-bottom: 8pt solid #57294C;
